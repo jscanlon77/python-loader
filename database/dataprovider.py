@@ -19,9 +19,8 @@ class SqlProvider:
             engine = create_engine("mssql+pyodbc://" + 'LOCALHOST' + "/" + 'InvestorAnalytics' + "?driver=SQL+Server")
             df.to_sql(name=tableName,con=engine, if_exists=replaceOrAppend, index=False, chunkSize=chunkSize)
         except SQLAlchemyError as e :
-            logging.error(e.msg)
+            logging.error(e)
 
-       
     def getRecords(self, connectionString, query) :
         
         try:
