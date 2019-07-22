@@ -1,6 +1,7 @@
 import pandas as pnds
 from pandas.core.groupby.groupby import DataError
 from database import dataprovider
+import logging
 
 
 class ImportFile :
@@ -15,4 +16,4 @@ class ImportFile :
             prov = dataprovider.SqlProvider()
             prov.insertRecords(df, destinationName, False, chSize)
         except DataError as dataError :
-            print(dataError)
+            logging.error(dataError)

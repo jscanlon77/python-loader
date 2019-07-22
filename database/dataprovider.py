@@ -8,7 +8,7 @@ from pandas.core.groupby.groupby import DataError
 
 class SqlProvider:
 
-    def insertRecords(self, df, tableName, isReplace, chunkSize) :
+    def insertRecords(self, df, tableName, isReplace, chSize) :
         replaceOrAppend = ''
         if isReplace :
             replaceOrAppend = 'replace'
@@ -16,8 +16,9 @@ class SqlProvider:
             replaceOrAppend = 'append'
         
         try :
-            engine = create_engine("mssql+pyodbc://" + 'LOCALHOST' + "/" + 'InvestorAnalytics' + "?driver=SQL+Server")
-            df.to_sql(name=tableName,con=engine, if_exists=replaceOrAppend, index=False, chunkSize=chunkSize)
+            engine = create_engine("mssql+pyodbc://" + 'LOCALHOST' + "/" + 'InvestorAnalytics' + "?driver=ODBC+Driver+17+for+SQL+Server",
+    fast_executemany=True)
+            df.to_sql(name=tableName,con=engine, if_exists=replaceOrAppend, index=False,chunksize=chSize)
         except SQLAlchemyError as e :
             logging.error(e)
 
